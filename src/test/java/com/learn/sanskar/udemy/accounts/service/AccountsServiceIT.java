@@ -1,15 +1,37 @@
 package com.learn.sanskar.udemy.accounts.service;
 
-import com.learn.sanskar.udemy.accounts.repository.AccountsRepository;
+import com.learn.sanskar.udemy.accounts.model.Account;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@SpringBootTest
+@Transactional
+@ExtendWith(SpringExtension.class)
 class AccountsServiceIT {
 
-    @MockBean
-    private AccountsRepository accountsRepository;
+    private static final int CUSTOMER_ID = 1;
+
+
+    @Autowired
+    private AccountsService accountsService;
 
     @Test
-    void getAccountByCustomerId() {
+    void givenCustomerId_whenGetAccountByCustomerId_thenReturnAccount() {
+        Optional<Account> optionalAccount = accountsService.getAccountByCustomerId(CUSTOMER_ID);
+        assertTrue(optionalAccount.isPresent());
+    }
+
+    @Test
+    void givenCustomerIdNotPresent_whenGetAccountByCustomerId_thenReturnEmptyAccount() {
+        Optional<Account> optionalAccount = accountsService.getAccountByCustomerId(2);
+        assertTrue(optionalAccount.isEmpty());
     }
 }

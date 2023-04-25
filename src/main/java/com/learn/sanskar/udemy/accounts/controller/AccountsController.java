@@ -35,7 +35,7 @@ public class AccountsController {
     }
 
     @GetMapping(value = "/account/customer/{customerId}")
-    public Account getAccount(@PathVariable("customerId") @NotNull Integer customerId)  {
+    public Account getAccount(@PathVariable("customerId") @NotNull Integer customerId) {
         Optional<Account> accountOptional = accountsService.getAccountByCustomerId(customerId);
         return accountOptional.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "customer not found"));
     }
