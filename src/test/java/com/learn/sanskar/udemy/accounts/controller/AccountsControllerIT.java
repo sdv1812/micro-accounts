@@ -1,8 +1,5 @@
 package com.learn.sanskar.udemy.accounts.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.learn.sanskar.udemy.accounts.exception.ErrorResponse;
 import com.learn.sanskar.udemy.accounts.model.Account;
 import com.learn.sanskar.udemy.accounts.model.Customer;
 import com.learn.sanskar.udemy.accounts.service.AccountsService;
@@ -21,6 +18,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -55,6 +53,7 @@ class AccountsControllerIT {
 
         assertEquals(HttpStatus.OK.value(), accountResponseEntity.getStatusCode().value());
         assertThat(accountResponseEntity.getStatusCode().value()).isEqualTo(HttpStatus.OK.value());
+        assertNotNull(accountResponseEntity.getBody());
         assertThat(accountResponseEntity.getBody().getAccountNumber()).isEqualTo(ACCOUNT_NUMBER);
         assertThat(accountResponseEntity.getBody().getCustomerId()).isEqualTo(CUSTOMER_ID);
         assertThat(accountResponseEntity.getBody().getAccountType()).isEqualTo(ACCOUNT_TYPE);
