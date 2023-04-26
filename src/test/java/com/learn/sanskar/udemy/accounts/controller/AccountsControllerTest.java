@@ -4,8 +4,7 @@ import com.learn.sanskar.udemy.accounts.model.Account;
 import com.learn.sanskar.udemy.accounts.service.AccountsService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,8 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@WebMvcTest(AccountsController.class)
 class AccountsControllerTest {
 
     private static final String GET_ACCOUNT_URL = "/account";
@@ -50,7 +48,7 @@ class AccountsControllerTest {
                 }
                 """;
         this.mockMvc.perform(
-                        post("GET_ACCOUNT_URL")
+                        post(GET_ACCOUNT_URL)
                                 .content(requestBody)
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andDo(print())
