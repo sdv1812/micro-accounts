@@ -1,7 +1,9 @@
 package com.learn.sanskar.udemy.accounts.controller;
 
 import com.learn.sanskar.udemy.accounts.model.Account;
+import com.learn.sanskar.udemy.accounts.model.Customer;
 import com.learn.sanskar.udemy.accounts.service.AccountsService;
+import com.learn.sanskar.udemy.accounts.util.JsonUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -62,14 +64,11 @@ class AccountsControllerTest {
     @Test
     void whenCustomerIdNotExist_returnNotFoundResponse() throws Exception {
         when(accountsService.getAccountByCustomerId(anyInt())).thenReturn(Optional.empty());
-        String requestBody = """
-                {
-                    "customerId": 2
-                }
-                """;
+        Customer customer = new Customer();
+        customer.setCustomerId(2);
         this.mockMvc.perform(
                         post("/account")
-                                .content(requestBody)
+                                .content(JsonUtils.asJsonString(customer))
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andDo(print())
                 .andExpect(status().isNotFound())
